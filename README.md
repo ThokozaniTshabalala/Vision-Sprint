@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a href="https://vision-sprint.netlify.app/" target="_blank">
-      <img src="./public/VISION_SPRINT_MARKETING_MATERIAL01.png alt="Vision Sprint Banner" style="border-radius: 10px;">
+      <img src="/VISION_SPRINT_MARKETING_MATERIAL01.png alt="Vision Sprint Banner" style="border-radius: 10px;">
     </a>
   <br />
 
