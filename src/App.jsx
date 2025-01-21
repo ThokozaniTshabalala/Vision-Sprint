@@ -4,6 +4,8 @@ import Hero from './components/Hero/Hero';
 import Banner from './components/Banner/Banner';
 import DeviceDesign from './components/DeviceDesign/DeviceDesign';
 import Services from './components/Services/Services';
+import FooterBanner from './components/FooterBanner/FooterBanner'
+import Footer from './components/Footer/Footer';
 import './App.css'
 
 function App() {
@@ -16,7 +18,8 @@ function App() {
       <Hero />
       <DeviceDesign />
       <Services />
-
+      <FooterBanner />
+      <Footer />
     </div>
       
     </div>
