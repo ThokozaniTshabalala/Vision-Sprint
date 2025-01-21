@@ -18,7 +18,7 @@ const FooterBanner = () => {
           <span className="bg-gradient-to-r from-yellow-400 to-orange-200 bg-clip-text text-transparent">
             business insights
           </span>, and{' '}
-          <span className="bg-gradient-to-r from-yellow-400 to-orange-200 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-orange-100 to-yellow-400  bg-clip-text text-transparent">
             data-driven strategies
           </span>
         </p>

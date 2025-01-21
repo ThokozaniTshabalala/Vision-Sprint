@@ -47,7 +47,7 @@ const Services = () => {
   ];
 
   return (
-    <div id="Services" className="bg-white py-12 px-4 md:px-8 lg:px-16">
+    <div id="Services" className="bg-white py-0 px-4 md:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto text-center mb-12">
         <p className="text-orange-500 uppercase font-semibold text-sm">
           Our Software Services

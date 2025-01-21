@@ -17,7 +17,7 @@ function App() {
       <Header/>
       <Hero />
       <DeviceDesign />
-      <Services />
+      <Services className="mb-0"/>
       <FooterBanner />
       <Footer />
     </div>
