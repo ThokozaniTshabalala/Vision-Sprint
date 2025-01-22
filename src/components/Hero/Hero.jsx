@@ -37,34 +37,46 @@ const Hero = () => {
   }, [currentTextIndex]);
 
   return (
-    <section className="hero-wrapper flex flex-col items-center justify-start text-center p-6 mt-9">
-      <div className="text-section flex flex-col items-center">
-        <h1 className="text-lg text-gray-600 font-semibold">Transform your business</h1>
-        <h1 className="text-5xl font-bold">
+    <section className="hero-wrapper flex flex-col items-center justify-start text-center p-4 sm:p-6 mt-6 sm:mt-9">
+      <div className="text-section flex flex-col items-center px-4 sm:px-6 md:px-8">
+        {/* Subtitle */}
+        <h1 className="text-base sm:text-lg text-gray-600 font-semibold">
+          Transform your business
+        </h1>
+
+        {/* Main heading */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 sm:mt-4">
           Design & Build{' '}
           <span className="text-orange-500">World-Class Digital Products</span>
         </h1>
 
-        <p className="mt-9 text-gray-600 text-lg max-w-xl">
+        {/* Description */}
+        <p className="mt-6 sm:mt-9 text-base sm:text-lg text-gray-600 max-w-xs sm:max-w-lg md:max-w-xl">
           We design and build powerful native, cross-platform mobile and web applications 
           that drive business growth and transformation. We help you achieve your goals.
         </p>
       </div>
 
-      <div className="Discuss-project-button mt-6">
-        <button className="px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
-          text-lg font-medium rounded-lg hover:scale-105 transition-transform">
+      {/* Button */}
+      <div className="Discuss-project-button mt-4 sm:mt-6">
+        <button className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
+          text-base sm:text-lg font-medium rounded-lg hover:scale-105 transition-transform">
           Discuss Your Project
         </button>
       </div>
 
-      <div className="mt-5 h-8 font-medium text-gray-700 min-h-[2rem] relative">
-        <span className="whitespace-nowrap">{displayedText}</span>
-        <img 
-          src="/stars.png"
-          alt="sparkle cursor"
-          className="absolute inline-block h-10 w-10 -right-10 top-1/2 transform -translate-y-1/2"
-        />
+      {/* Typing animation container */}
+      <div className="mt-4 sm:mt-5 h-6 sm:h-8 font-medium text-gray-700 min-h-[2rem] relative px-4 sm:px-0">
+        <div className="flex items-center justify-center">
+          <span className="text-sm sm:text-base md:text-lg whitespace-normal sm:whitespace-nowrap">
+            {displayedText}
+          </span>
+          <img 
+            src="/stars.png"
+            alt="sparkle cursor"
+            className="absolute h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 -right-8 sm:-right-10 top-1/2 transform -translate-y-1/2"
+          />
+        </div>
       </div>
     </section>
   );

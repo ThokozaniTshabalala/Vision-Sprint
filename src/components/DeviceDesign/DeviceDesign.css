@@ -1,0 +1,10 @@
+.device-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  @media (max-width: 940px) {
+    .device-image {
+      content: url("/responsive_design_hero.png");
+    }
+  }
