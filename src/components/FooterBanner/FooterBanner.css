@@ -101,7 +101,7 @@
 
 @media (max-width: 712px) {
   .text-overlay {
-    width: 60%;
+    width: 70%;
     left: 50%;
     transform: translateX(-50%) translateY(-40%);
     display: flex;
