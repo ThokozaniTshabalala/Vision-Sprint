@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
@@ -9,20 +10,20 @@ function Footer() {
                 <div className="flex flex-col items-start">
                   {/* Logo Section */}
                   <div className="logo flex items-center justify-start">
-                    <a href="https://vision-sprint.netlify.app/" aria-label="Vision Sprint Home">
+                    <Link to="/" aria-label="Vision Sprint Home">
                       <img
-                      src="vision_sprint_logo123.png"
+                      src="/vision_sprint_logo123.png"
                       alt="logo"
                       className="w-10"
                       />
-                    </a>
+                    </Link>
                    <h2 className="ml-5">Vision Sprint</h2>
                   </div>
 
                    {/* Footer Print Section */}
                   <div className="mt-5 md:mt-0 md:ml-10 group relative">
                     <img
-                    src="footer_print02_NO_BACKGROUND.png"
+                    src="/footer_print02_NO_BACKGROUND.png"
                     alt="footer print"
                     />
                   
@@ -30,16 +31,16 @@ function Footer() {
                 </div>
 
 
-                    {/* Area 2: About edX */}
+                    {/* Area 2: About Vision Sprint */}
                     <div className="about">
                         <h2 className="text-lg font-semibold mb-4">Vision Sprint</h2>
                         <ul className="space-y-2">
-                            <li><a href="https://edx.org/about-us" className="hover:text-gray-400">About</a></li>
-                            <li><a href="https://edx.org/affiliate-program" className="hover:text-gray-400">Affiliates</a></li>
-                            <li><a href="https://business.edx.org/?utm_campaign=edX.org+Referral&utm_medium=Footer&utm_source=learning.edx.org" className="hover:text-gray-400">for Business</a></li>
-                            <li><a href="http://open.edx.org" className="hover:text-gray-400">for Individuals</a></li>
-                            <li><a href="https://edx.org/careers" className="hover:text-gray-400">Careers</a></li>
-                            <li><a href="https://edx.org/news-announcements" className="hover:text-gray-400">News</a></li>
+                            <li><a href="/#About" className="hover:text-gray-400">About</a></li>
+                            <li><a href="/#Services" className="hover:text-gray-400">Our Services</a></li>
+                            <li><a href="/#Portfolio" className="hover:text-gray-400">Portfolio</a></li>
+                            <li><Link to="/discuss-project" className="hover:text-gray-400">Contact Us</Link></li>
+                            <li><Link to="/discuss-project" className="hover:text-gray-400">Careers</Link></li>
+                            <li><a href="/#About" className="hover:text-gray-400">Blog</a></li>
                         </ul>
                     </div>
 
@@ -47,11 +48,11 @@ function Footer() {
                     <div className="connect">
                         <h2 className="text-lg font-semibold mb-4">Connect</h2>
                         <ul className="space-y-2">
-                            <li><a href="https://www.edx.org/resources" className="hover:text-gray-400">Idea Hub</a></li>
-                            <li><a href="https://courses.edx.org/support/contact_us" className="hover:text-gray-400">Contact Us</a></li>
-                            <li><a href="https://support.edx.org" className="hover:text-gray-400">Help Center</a></li>
-                            <li><a href="https://edx.org/policy/security" className="hover:text-gray-400">Security</a></li>
-                            <li><a href="https://edx.org/media-kit" className="hover:text-gray-400">Media Kit</a></li>
+                            <li><a href="/#Services" className="hover:text-gray-400">Our Services</a></li>
+                            <li><Link to="/discuss-project" className="hover:text-gray-400">Contact Us</Link></li>
+                            <li><Link to="/discuss-project" className="hover:text-gray-400">Get Started</Link></li>
+                            <li><a href="/#About" className="hover:text-gray-400">Privacy Policy</a></li>
+                            <li><a href="/#About" className="hover:text-gray-400">Terms of Service</a></li>
                         </ul>
                     </div>
 

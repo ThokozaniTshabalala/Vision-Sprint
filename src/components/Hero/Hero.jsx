@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -59,10 +60,12 @@ const Hero = () => {
 
       {/* Button */}
       <div className="Discuss-project-button mt-4 sm:mt-6">
-        <button className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
-          text-base sm:text-lg font-medium rounded-lg hover:scale-105 transition-transform">
-          Discuss Your Project
-        </button>
+        <Link to="/discuss-project">
+          <button className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-orange-400 to-orange-500 text-white 
+            text-base sm:text-lg font-medium rounded-lg hover:scale-105 transition-transform">
+            Discuss Your Project
+          </button>
+        </Link>
       </div>
 
       {/* Typing animation container */}

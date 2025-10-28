@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,32 +13,32 @@ const Header = () => {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo section */}
-          <div className="flex items-center">
-            <img src="vision_sprint_logo123.png" alt="logo" className="w-10" />
+          <Link to="/" className="flex items-center">
+            <img src="/vision_sprint_logo123.png" alt="logo" className="w-10" />
             <h3 className="ml-4 font-semibold text-black">Vision Sprint</h3>
-          </div>
+          </Link>
 
           {/* Desktop Navigation - Hidden below 815px */}
           <div className="hidden min-[815px]:flex space-x-8 items-center">
-            <a href="" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
+            <a href="/#Services" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
               Our Services
             </a>
-            <a href="" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
+            <a href="/#Portfolio" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
               Portfolio
             </a>
-            <a href="" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
+            <Link to="/discuss-project" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
               Contact Us
-            </a>
-            <a href="" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
+            </Link>
+            <Link to="/discuss-project" className="text-gray-600 transition-colors duration-300 hover:text-orange-500">
               Get Started
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Button - Hidden below 815px */}
           <div className="hidden min-[815px]:flex items-center">
-            <button className="py-2 px-6 text-white bg-gradient-to-r from-orange-400 to-orange-600 rounded-md transition-all duration-300 hover:scale-105 focus:outline-none">
-              <a href="">Discuss a Project</a>
-            </button>
+            <Link to="/discuss-project" className="py-2 px-6 text-white bg-gradient-to-r from-orange-400 to-orange-600 rounded-md transition-all duration-300 hover:scale-105 focus:outline-none">
+              Discuss a Project
+            </Link>
           </div>
 
           {/* Mobile menu button - Visible below 815px */}
@@ -83,32 +84,32 @@ const Header = () => {
         <div className="min-[815px]:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50">
           <div className="px-4 pt-2 pb-4 space-y-4">
             <a
-              href=""
+              href="/#Services"
               className="block text-gray-600 hover:text-orange-500 transition-colors duration-300"
             >
               Our Services
             </a>
             <a
-              href=""
+              href="/#Portfolio"
               className="block text-gray-600 hover:text-orange-500 transition-colors duration-300"
             >
               Portfolio
             </a>
-            <a
-              href=""
+            <Link
+              to="/discuss-project"
               className="block text-gray-600 hover:text-orange-500 transition-colors duration-300"
             >
               Contact Us
-            </a>
-            <a
-              href=""
+            </Link>
+            <Link
+              to="/discuss-project"
               className="block text-gray-600 hover:text-orange-500 transition-colors duration-300"
             >
               Get Started
-            </a>
-            <button className="w-full py-2 px-6 text-white bg-gradient-to-r from-orange-400 to-orange-600 rounded-md transition-all duration-300 hover:scale-105 focus:outline-none">
-              <a href="">Discuss a Project</a>
-            </button>
+            </Link>
+            <Link to="/discuss-project" className="w-full py-2 px-6 text-white bg-gradient-to-r from-orange-400 to-orange-600 rounded-md transition-all duration-300 hover:scale-105 focus:outline-none text-center block">
+              Discuss a Project
+            </Link>
           </div>
         </div>
       )}

@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FooterBanner.css';
 
 const FooterBanner = () => {
   return (
-    <section className="relative">
-      <div className="flex justify-center items-center min-h-screen pt-0 px-4">
+    <section className="relative py-8 md:py-12 overflow-hidden">
+      <div className="flex justify-center items-center px-4">
         <img 
           src="/VISION SPRINT_TRANSFORM_YOUR_BUSINESS_large.png" 
           alt="transform your business" 
@@ -27,9 +28,11 @@ const FooterBanner = () => {
             data-driven strategies
           </span>
         </p>
-        <button className="banner-button rounded-md bg-gradient-to-r from-[#fea01b] to-[#ff851a] hover:from-[#ff851a] hover:to-[#fea01b] text-white font-medium transition-all duration-200 w-fit">
-          Discuss a Project
-        </button>
+        <Link to="/discuss-project">
+          <button className="banner-button rounded-md bg-gradient-to-r from-[#fea01b] to-[#ff851a] hover:from-[#ff851a] hover:to-[#fea01b] text-white font-medium transition-all duration-200 w-fit">
+            Discuss a Project
+          </button>
+        </Link>
       </div>
     </section>
   );
