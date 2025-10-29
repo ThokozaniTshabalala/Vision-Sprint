@@ -55,10 +55,27 @@ const createEmailHTML = (data: FormData): string => {
 };
 
 export const handler: Handler = async (event) => {
+  // CORS headers
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  // Handle OPTIONS request for CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: '',
+    };
+  }
+
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers,
       body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
@@ -70,6 +87,7 @@ export const handler: Handler = async (event) => {
     if (!data.name || !data.email || !data.projectType || !data.message) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ success: false, error: 'Missing required fields' }),
       };
     }
@@ -79,6 +97,7 @@ export const handler: Handler = async (event) => {
       console.error('GMAIL_APP_PASSWORD not configured');
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({ success: false, error: 'Email service not configured' }),
       };
     }
@@ -103,14 +122,17 @@ export const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({
         success: true,
         message: 'Email sent successfully! We\'ll get back to you within 24 hours.',
       }),
     };
   } catch (error: any) {
+    console.error('Error sending email:', error);
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         success: false,
         error: error.message || 'Failed to send email',
