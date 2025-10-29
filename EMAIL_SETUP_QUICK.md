@@ -65,3 +65,5 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
 
 Now when users click "Send Message", emails will be sent automatically to `lalelaninene@gmail.com` without any manual steps!
 
+
+

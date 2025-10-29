@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { sendEmail } from '../../utils/emailService';
 import './ProjectDiscussion.css';
 
@@ -136,7 +136,7 @@ const ProjectDiscussion = () => {
         setMessageType('error');
         setSubmitMessage(result.error || '❌ Failed to send message. Please check your EmailJS configuration or try again.');
       }
-    } catch (error) {
+    } catch {
       setMessageType('error');
       setSubmitMessage('❌ An error occurred. Please try again later.');
     } finally {
@@ -192,7 +192,7 @@ const ProjectDiscussion = () => {
             Discuss Your <span className="text-orange-500">Project</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            Let's transform your vision into reality. Fill out the form below and we'll get back to you as soon as possible.
+            Let&apos;s transform your vision into reality. Fill out the form below and we&apos;ll get back to you as soon as possible.
           </p>
         </div>
 
@@ -391,7 +391,7 @@ const ProjectDiscussion = () => {
                     Sending Email...
                   </span>
                 ) : (
-                  '📧 Send Message'
+                  'Send Message'
                 )}
               </button>
             </div>

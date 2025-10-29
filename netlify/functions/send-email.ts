@@ -13,10 +13,11 @@ interface FormData {
   message: string;
 }
 
-const GMAIL_USER = 'lalelaninene@gmail.com';
-const GMAIL_APP_PASSWORD = 'dbdh dpre fbji cgui'.replace(/\s/g, '');
-const RECIPIENT_1 = 'lalelaninene@gmail.com';
-const RECIPIENT_2 = 'thokozanierick02@gmail.com';
+// Use environment variables for security
+const GMAIL_USER = process.env.GMAIL_USER || 'lalelaninene@gmail.com';
+const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
+const RECIPIENT_1 = process.env.RECIPIENT_1 || 'lalelaninene@gmail.com';
+const RECIPIENT_2 = process.env.RECIPIENT_2 || 'thokozanierick02@gmail.com';
 
 const createEmailHTML = (data: FormData): string => {
   return `
@@ -73,6 +74,15 @@ export const handler: Handler = async (event) => {
       };
     }
 
+    // Check if email credentials are configured
+    if (!GMAIL_APP_PASSWORD) {
+      console.error('GMAIL_APP_PASSWORD not configured');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ success: false, error: 'Email service not configured' }),
+      };
+    }
+
     // Create transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -108,4 +118,6 @@ export const handler: Handler = async (event) => {
     };
   }
 };
+
+
 

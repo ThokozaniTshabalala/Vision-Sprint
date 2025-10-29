@@ -81,3 +81,4 @@ For now, EmailJS is the simplest solution for a frontend-only app.
 - Verify Gmail service is connected properly
 - Ensure template variables match the code
 
+

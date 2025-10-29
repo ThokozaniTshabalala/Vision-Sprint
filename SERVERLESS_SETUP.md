@@ -56,3 +56,5 @@ The frontend automatically detects which environment and uses the correct API UR
 
 Your credentials are embedded in the function, so emails still come from your Gmail account!
 
+
+
