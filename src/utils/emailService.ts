@@ -1,4 +1,5 @@
 // TypeScript Email Service - Sends to local API server
+
 interface FormData {
   name: string;
   email: string;
