@@ -18,10 +18,10 @@ interface EmailResult {
 
 // API endpoint - uses Netlify Functions if deployed, otherwise local server
 const API_URL = import.meta.env.VITE_API_URL || 
-  (import.meta.env.PROD ? '/api' : 'http://localhost:3001');
+  (import.meta.env.PROD ? '' : 'http://localhost:3001');
 
 /**
- * Sends email via local API server (uses Gmail SMTP)
+ * Sends email via Netlify serverless function in production, or local API in development
  */
 export const sendEmail = async (data: FormData): Promise<EmailResult> => {
   try {
@@ -33,6 +33,14 @@ export const sendEmail = async (data: FormData): Promise<EmailResult> => {
       body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: errorData.error || `Server error: ${response.status}`
+      };
+    }
+
     const result = await response.json();
     
     return result;
@@ -40,7 +48,9 @@ export const sendEmail = async (data: FormData): Promise<EmailResult> => {
     console.error('Email API request failed:', error);
     return {
       success: false,
-      error: 'Failed to connect to email server. Make sure the server is running on port 3001.'
+      error: import.meta.env.PROD 
+        ? 'Failed to send email. Please try again or contact us directly.'
+        : 'Failed to connect to email server. Make sure the server is running on port 3001.'
     };
   }
 };

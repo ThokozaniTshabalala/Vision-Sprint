@@ -3,16 +3,16 @@
   publish = "dist"
   functions = "netlify/functions"
 
-# Redirect all routes to index.html for SPA routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# API redirects to serverless functions
+# API redirects to serverless functions (MUST come before SPA redirect)
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+# Redirect all other routes to index.html for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 # Security headers
