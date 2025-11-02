@@ -19,6 +19,17 @@ const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
 const RECIPIENT_1 = process.env.RECIPIENT_1 || 'lalelaninene@gmail.com';
 const RECIPIENT_2 = process.env.RECIPIENT_2 || 'thokozanierick02@gmail.com';
 
+// Escape HTML entities to prevent HTML/script injection in emails
+const escapeHtml = (str: string | undefined | null): string => {
+  const s = String(str ?? '');
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
 const createEmailHTML = (data: FormData): string => {
   return `
 <!DOCTYPE html>
@@ -32,17 +43,17 @@ const createEmailHTML = (data: FormData): string => {
     </div>
     <div style="padding: 30px;">
       <div style="background: #f9fafb; padding: 20px; border-radius: 8px; border-left: 4px solid #ff7f32; margin-bottom: 20px;">
-        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>👤 Name:</strong> ${data.name}</div>
-        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>📧 Email:</strong> <a href="mailto:${data.email}" style="color: #ff7f32;">${data.email}</a></div>
-        ${data.phone ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>📞 Phone:</strong> ${data.phone}</div>` : ''}
-        ${data.company ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>🏢 Company:</strong> ${data.company}</div>` : ''}
-        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>🎨 Project Type:</strong> <span style="color: #ff7f32; font-weight: 600;">${data.projectType}</span></div>
-        ${data.budget ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>💰 Budget:</strong> ${data.budget}</div>` : ''}
-        ${data.timeline ? `<div style="margin-bottom: 12px;"><strong>⏱️ Timeline:</strong> ${data.timeline}</div>` : ''}
+        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>👤 Name:</strong> ${escapeHtml(data.name)}</div>
+        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>📧 Email:</strong> <a href="mailto:${escapeHtml(data.email)}" style="color: #ff7f32;">${escapeHtml(data.email)}</a></div>
+        ${data.phone ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>📞 Phone:</strong> ${escapeHtml(data.phone)}</div>` : ''}
+        ${data.company ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>🏢 Company:</strong> ${escapeHtml(data.company)}</div>` : ''}
+        <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>🎨 Project Type:</strong> <span style="color: #ff7f32; font-weight: 600;">${escapeHtml(data.projectType)}</span></div>
+        ${data.budget ? `<div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;"><strong>💰 Budget:</strong> ${escapeHtml(data.budget)}</div>` : ''}
+        ${data.timeline ? `<div style=\"margin-bottom: 12px;\"><strong>⏱️ Timeline:</strong> ${escapeHtml(data.timeline)}</div>` : ''}
       </div>
       <div style="padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px;">
         <h3 style="color: #ff7f32; margin-top: 0; border-bottom: 2px solid #ff7f32; padding-bottom: 10px;">📝 Project Details</h3>
-        <div style="color: #4b5563; white-space: pre-wrap; line-height: 1.8;">${data.message.replace(/\n/g, '<br>')}</div>
+        <div style="color: #4b5563; white-space: pre-wrap; line-height: 1.8;">${escapeHtml(data.message).replace(/\n/g, '<br>')}</div>
       </div>
     </div>
     <div style="background: #1f2937; color: #9ca3af; padding: 20px; text-align: center; font-size: 12px;">
@@ -111,12 +122,15 @@ export const handler: Handler = async (event) => {
       },
     });
 
+    // Prepare safe subject (avoid newlines and header injection)
+    const safeName = (data.name || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 200);
+
     // Send email
     await transporter.sendMail({
       from: `"Vision Sprint" <${GMAIL_USER}>`,
       to: `${RECIPIENT_1}, ${RECIPIENT_2}`,
       replyTo: data.email,
-      subject: `🎯 New Project Inquiry from ${data.name}`,
+      subject: `🎯 New Project Inquiry from ${safeName}`,
       html: createEmailHTML(data),
     });
 
