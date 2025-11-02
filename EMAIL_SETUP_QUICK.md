@@ -10,7 +10,7 @@ To enable automatic email sending on click, follow these simple steps:
 1. In EmailJS dashboard, click **Email Services** → **Add New Service**
 2. Select **Gmail**
 3. Click **Connect Account** and sign in with: `lalelaninene@gmail.com`
-4. When prompted for password, use the app password: `dbdh dpre fbji cgui`
+4. When prompted for password, use your Gmail App Password (16 characters, no spaces): `<your 16-char Gmail App Password>`
 5. Copy the **Service ID** (starts with `service_`)
 
 ## Step 3: Create Email Template

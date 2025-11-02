@@ -37,11 +37,10 @@ Value: lalelaninene@gmail.com
 #### Variable 2: GMAIL_APP_PASSWORD
 ```
 Key:   GMAIL_APP_PASSWORD
-Value: dbdhdprefbjicgui
+Value: <your 16-char Gmail App Password>
 ```
 **⚠️ IMPORTANT:** 
-- No spaces in the password!
-- It should be exactly: `dbdhdprefbjicgui` (16 characters, no spaces)
+- 16 characters, no spaces (generated from Google App Passwords)
 - Click **"Create variable"**
 
 ---
@@ -119,7 +118,7 @@ After adding the variables:
 **"Failed to send email"**
 - ❌ Gmail password is incorrect
 - ❌ Gmail password has spaces
-- ✅ Verify password: `dbdhdprefbjicgui` (no spaces!)
+- ✅ Verify password: 16 chars, no spaces
 - ✅ Check Gmail account has 2FA enabled
 
 **"Invalid credentials"**
@@ -150,7 +149,7 @@ Netlify Dashboard
 Environment variables (4)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 GMAIL_USER              lalelaninene@gmail.com
-GMAIL_APP_PASSWORD      dbdhdprefbjicgui
+GMAIL_APP_PASSWORD      <your 16-char Gmail App Password>
 RECIPIENT_1             lalelaninene@gmail.com
 RECIPIENT_2             thokozanierick02@gmail.com
 ```

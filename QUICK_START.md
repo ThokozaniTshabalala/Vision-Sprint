@@ -19,7 +19,7 @@ Add these 4 variables:
 | Variable Name | Value |
 |--------------|-------|
 | `GMAIL_USER` | `lalelaninene@gmail.com` |
-| `GMAIL_APP_PASSWORD` | `dbdhdprefbjicgui` |
+| `GMAIL_APP_PASSWORD` | `<your 16-char Gmail App Password>` |
 | `RECIPIENT_1` | `lalelaninene@gmail.com` |
 | `RECIPIENT_2` | `thokozanierick02@gmail.com` |
 

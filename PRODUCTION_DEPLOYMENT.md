@@ -16,7 +16,7 @@
 | Variable Name | Value | Description |
 |--------------|-------|-------------|
 | `GMAIL_USER` | `lalelaninene@gmail.com` | Gmail account for sending emails |
-| `GMAIL_APP_PASSWORD` | `dbdhdprefbjicgui` | Gmail App Password (no spaces) |
+| `GMAIL_APP_PASSWORD` | `<your 16‑char Gmail App Password>` | Gmail App Password (no spaces) |
 | `RECIPIENT_1` | `lalelaninene@gmail.com` | First recipient email |
 | `RECIPIENT_2` | `thokozanierick02@gmail.com` | Second recipient email |
 

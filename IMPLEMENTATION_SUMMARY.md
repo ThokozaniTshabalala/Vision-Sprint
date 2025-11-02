@@ -71,7 +71,7 @@ To activate the email system, you need to:
 
 **See `EMAIL_SETUP.md` for step-by-step instructions.**
 
-The app password provided (`dbdh dpre fbji cgui`) can be used when setting up the Gmail service in EmailJS.
+Use your Gmail App Password (16 characters, no spaces) when setting up the Gmail service in EmailJS.
 
 ## 📁 Files Created/Modified
 

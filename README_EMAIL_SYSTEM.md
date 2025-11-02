@@ -46,14 +46,10 @@ Vision-Sprint/
 
 ## 🔧 Configuration
 
-Your Gmail credentials are hardcoded in `server/emailServer.ts`:
-- Email: `lalelaninene@gmail.com`
-- App Password: `dbdh dpre fbji cgui`
-
-To use environment variables, create a `.env` file:
+Configure credentials via environment variables (recommended). Create a `.env` file locally (do not commit secrets):
 ```env
 GMAIL_USER=lalelaninene@gmail.com
-GMAIL_APP_PASSWORD=dbdh dpre fbji cgui
+GMAIL_APP_PASSWORD=<your 16-char Gmail App Password>
 PORT=3001
 ```
 

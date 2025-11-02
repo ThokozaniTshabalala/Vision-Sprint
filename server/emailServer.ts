@@ -18,19 +18,22 @@ interface EmailResult {
   error?: string;
 }
 
-// Gmail credentials from environment variables or direct config
-const GMAIL_USER = process.env.GMAIL_USER || 'lalelaninene@gmail.com';
-const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || 'dbdh dpre fbji cgui').replace(/\s/g, '');
+// Gmail credentials from environment variables only (no hardcoded fallbacks)
+const GMAIL_USER = process.env.GMAIL_USER || '';
+const GMAIL_APP_PASSWORD = (process.env.GMAIL_APP_PASSWORD || '').replace(/\s/g, '');
 const RECIPIENT_EMAIL_1 = 'lalelaninene@gmail.com';
 const RECIPIENT_EMAIL_2 = 'thokozanierick02@gmail.com';
 
 // Create reusable transporter
 const createTransporter = (): Transporter => {
-  return nodemailer.createTransport({
+    if (!GMAIL_USER || !GMAIL_APP_PASSWORD) {
+        throw new Error('Missing Gmail credentials. Ensure GMAIL_USER and GMAIL_APP_PASSWORD are set in environment variables.');
+    }
+    return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: GMAIL_USER,
-      pass: GMAIL_APP_PASSWORD.replace(/\s/g, ''), // Remove spaces from app password
+            pass: GMAIL_APP_PASSWORD.replace(/\s/g, ''), // Remove spaces from app password
     },
   });
 };
@@ -269,7 +272,7 @@ export const sendEmail = async (data: FormData): Promise<EmailResult> => {
       html: createEmailHTML(data),
     };
 
-    const info = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     
     return {
       success: true,

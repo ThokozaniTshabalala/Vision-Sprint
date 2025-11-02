@@ -57,8 +57,8 @@ Reply to: {{from_email}}
    - `PUBLIC_KEY`: Your EmailJS Public Key
 
 ### Step 6: Using Gmail App Password
-If you need to use the app password you provided:
-1. The app password is: `dbdh dpre fbji cgui`
+If you need to use your Gmail App Password:
+1. Use your 16-character app password (no spaces), e.g., `<your 16-char Gmail App Password>`
 2. In EmailJS, when connecting Gmail, you may be asked to authorize
 3. EmailJS handles the authentication automatically
 
