@@ -21,6 +21,8 @@ const RECIPIENT_2 = process.env.RECIPIENT_2 || 'thokozanierick02@gmail.com';
 // Absolute URL for logo: prefer explicit env, fallback to Netlify site URL + public asset
 const SITE_URL = process.env.SITE_URL || process.env.URL || 'https://vision-sprint.netlify.app';
 const COMPANY_LOGO_URL = process.env.COMPANY_LOGO_URL || `${SITE_URL}/vision_sprint_logo123.png`;
+// Prefer a dark/white logo on colored (orange) header backgrounds
+const COMPANY_LOGO_DARK_URL = process.env.COMPANY_LOGO_DARK_URL || COMPANY_LOGO_URL;
 
 // Escape HTML entities to prevent HTML/script injection in emails
 const escapeHtml = (str: string | undefined | null): string => {
@@ -42,7 +44,7 @@ const createEmailHTML = (data: FormData): string => {
   <div style="max-width: 600px; margin: 20px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <div style="background: linear-gradient(135deg, #ff7f32 0%, #ff5e00 100%); color: white; padding: 30px 20px; text-align: center;">
       <div style="margin-bottom: 10px;">
-        <img src="${COMPANY_LOGO_URL}"
+  <img src="${COMPANY_LOGO_DARK_URL}"
              alt="Vision Sprint Logo"
              style="max-width: 140px; height: auto; display: inline-block; border-radius: 8px; background: rgba(255,255,255,0.06); padding: 6px;" />
       </div>
