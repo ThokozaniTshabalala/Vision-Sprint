@@ -18,6 +18,9 @@ const GMAIL_USER = process.env.GMAIL_USER || 'lalelaninene@gmail.com';
 const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD || '';
 const RECIPIENT_1 = process.env.RECIPIENT_1 || 'lalelaninene@gmail.com';
 const RECIPIENT_2 = process.env.RECIPIENT_2 || 'thokozanierick02@gmail.com';
+// Absolute URL for logo: prefer explicit env, fallback to Netlify site URL + public asset
+const SITE_URL = process.env.SITE_URL || process.env.URL || 'https://vision-sprint.netlify.app';
+const COMPANY_LOGO_URL = process.env.COMPANY_LOGO_URL || `${SITE_URL}/vision_sprint_logo123.png`;
 
 // Escape HTML entities to prevent HTML/script injection in emails
 const escapeHtml = (str: string | undefined | null): string => {
@@ -38,6 +41,11 @@ const createEmailHTML = (data: FormData): string => {
 <body style="font-family: Poppins, Arial, sans-serif; line-height: 1.6; color: #333;">
   <div style="max-width: 600px; margin: 20px auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <div style="background: linear-gradient(135deg, #ff7f32 0%, #ff5e00 100%); color: white; padding: 30px 20px; text-align: center;">
+      <div style="margin-bottom: 10px;">
+        <img src="${COMPANY_LOGO_URL}"
+             alt="Vision Sprint Logo"
+             style="max-width: 140px; height: auto; display: inline-block; border-radius: 8px; background: rgba(255,255,255,0.06); padding: 6px;" />
+      </div>
       <h1 style="margin: 0; font-size: 24px;">🎯 New Project Inquiry</h1>
       <p style="margin: 10px 0 0 0; opacity: 0.9;">Vision Sprint Contact Form</p>
     </div>
