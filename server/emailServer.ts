@@ -1,5 +1,6 @@
 // Gmail SMTP Email Server - TypeScript
 import nodemailer, { Transporter } from 'nodemailer';
+import { escapeHtml, headerSafe } from './inquiry.js';
 
 interface FormData {
   name: string;
@@ -151,56 +152,56 @@ const createEmailHTML = (data: FormData): string => {
             <div class="info-section">
                 <div class="info-row">
                     <div class="info-label">👤 Name:</div>
-                    <div class="info-value">${data.name}</div>
+                    <div class="info-value">${escapeHtml(data.name)}</div>
                 </div>
                 
                 <div class="info-row">
                     <div class="info-label">📧 Email:</div>
-                    <div class="info-value"><a href="mailto:${data.email}" style="color: #ff7f32; text-decoration: none;">${data.email}</a></div>
+                    <div class="info-value"><a href="mailto:${escapeHtml(data.email)}" style="color: #ff7f32; text-decoration: none;">${escapeHtml(data.email)}</a></div>
                 </div>
                 
                 ${data.phone ? `
                 <div class="info-row">
                     <div class="info-label">📞 Phone:</div>
-                    <div class="info-value">${data.phone}</div>
+                    <div class="info-value">${escapeHtml(data.phone)}</div>
                 </div>
                 ` : ''}
                 
                 ${data.company ? `
                 <div class="info-row">
                     <div class="info-label">🏢 Company:</div>
-                    <div class="info-value">${data.company}</div>
+                    <div class="info-value">${escapeHtml(data.company)}</div>
                 </div>
                 ` : ''}
                 
                 <div class="info-row">
                     <div class="info-label">🎨 Project Type:</div>
-                    <div class="info-value highlight">${data.projectType}</div>
+                    <div class="info-value highlight">${escapeHtml(data.projectType)}</div>
                 </div>
                 
                 ${data.budget ? `
                 <div class="info-row">
                     <div class="info-label">💰 Budget:</div>
-                    <div class="info-value">${data.budget}</div>
+                    <div class="info-value">${escapeHtml(data.budget)}</div>
                 </div>
                 ` : ''}
                 
                 ${data.timeline ? `
                 <div class="info-row">
                     <div class="info-label">⏱️ Timeline:</div>
-                    <div class="info-value">${data.timeline}</div>
+                    <div class="info-value">${escapeHtml(data.timeline)}</div>
                 </div>
                 ` : ''}
             </div>
             
             <div class="message-section">
                 <h3>📝 Project Details</h3>
-                <div class="message-content">${data.message.replace(/\n/g, '<br>')}</div>
+                <div class="message-content">${escapeHtml(data.message).replace(/\n/g, '<br>')}</div>
             </div>
             
             <div style="margin-top: 30px; padding: 20px; background: #fef3c7; border-radius: 8px; border-left: 4px solid #f59e0b;">
                 <p style="margin: 0; font-size: 14px; color: #92400e;">
-                    <strong>💡 Next Steps:</strong> Reply to ${data.email} to start the conversation!
+                    <strong>💡 Next Steps:</strong> Reply to ${escapeHtml(data.email)} to start the conversation!
                 </p>
             </div>
         </div>
@@ -267,7 +268,7 @@ export const sendEmail = async (data: FormData): Promise<EmailResult> => {
       from: `"Vision Sprint Contact Form" <${GMAIL_USER}>`,
       to: [RECIPIENT_EMAIL_1, RECIPIENT_EMAIL_2].join(', '),
       replyTo: data.email,
-      subject: `🎯 New Project Inquiry from ${data.name}`,
+      subject: `🎯 New Project Inquiry from ${headerSafe(data.name)}`,
       text: createEmailText(data),
       html: createEmailHTML(data),
     };
@@ -278,11 +279,12 @@ export const sendEmail = async (data: FormData): Promise<EmailResult> => {
       success: true,
       message: 'Email sent successfully to both recipients! We\'ll get back to you within 24 hours.'
     };
-  } catch (error: any) {
+  } catch (error) {
+    // Log details server-side only; SMTP errors can reveal account/config details.
     console.error('Email sending failed:', error);
     return {
       success: false,
-      error: error.message || 'Failed to send email. Please try again.'
+      error: 'Failed to send email. Please try again.'
     };
   }
 };

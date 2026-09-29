@@ -15,7 +15,6 @@
     "server:prod": "tsx server/index.ts"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@types/nodemailer": "^7.0.3",
     "framer-motion": "^11.18.2",
     "nodemailer": "^10.0.12",

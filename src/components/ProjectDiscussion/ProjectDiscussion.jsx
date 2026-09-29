@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { sendEmail } from '../../utils/emailService';
+import { Glass, MaskReveal, SectionMarker } from '../Glass/Glass';
 import './ProjectDiscussion.css';
 
 const ProjectDiscussion = () => {
@@ -12,6 +13,7 @@ const ProjectDiscussion = () => {
     budget: '',
     timeline: '',
     message: '',
+    website: '', // honeypot, hidden from people
   });
 
   const [errors, setErrors] = useState({});
@@ -130,6 +132,7 @@ const ProjectDiscussion = () => {
           budget: '',
           timeline: '',
           message: '',
+          website: '',
         });
         setErrors({});
       } else {
@@ -181,15 +184,16 @@ const ProjectDiscussion = () => {
   ];
 
   return (
-    <section className="project-discussion bg-gradient-to-b from-white to-gray-50 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+    <section className="project-discussion py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-10 sm:mb-12">
+          <div className="mb-3"><SectionMarker index={1} name="CONTACT" /></div>
           <p className="text-orange-500 uppercase font-semibold text-sm mb-2 tracking-wider">
             Get Started
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Discuss Your <span className="text-orange-500">Project</span>
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 mb-4 tracking-[-0.04em]">
+            <MaskReveal onMount lines={[<>Discuss Your <span className="text-orange-500">Project</span></>]} />
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             Let&apos;s transform your vision into reality. Fill out the form below and we&apos;ll get back to you as soon as possible.
@@ -197,8 +201,13 @@ const ProjectDiscussion = () => {
         </div>
 
         {/* Form Section */}
-        <div className="bg-white rounded-xl shadow-xl p-6 sm:p-8 md:p-10 lg:p-12 border border-gray-100">
+        <Glass corners radius={20} className="!bg-white/70 p-6 sm:p-8 md:p-10 lg:p-12">
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            {/* Honeypot: off-screen and skipped by keyboard/screen readers; bots that fill it are dropped server-side */}
+            <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="website">Website</label>
+              <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
+            </div>
             {/* Name and Email Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -209,6 +218,8 @@ const ProjectDiscussion = () => {
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
+                  maxLength={100}
                   value={formData.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -229,6 +240,8 @@ const ProjectDiscussion = () => {
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
+                  maxLength={254}
                   value={formData.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -252,6 +265,8 @@ const ProjectDiscussion = () => {
                   type="tel"
                   id="phone"
                   name="phone"
+                  autoComplete="tel"
+                  maxLength={30}
                   value={formData.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -271,6 +286,8 @@ const ProjectDiscussion = () => {
                   type="text"
                   id="company"
                   name="company"
+                  autoComplete="organization"
+                  maxLength={120}
                   value={formData.company}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all outline-none"
@@ -380,10 +397,11 @@ const ProjectDiscussion = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-12 py-4 sm:px-16 sm:py-5 bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold text-lg rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
+                className="magnetic relative overflow-hidden px-12 py-4 sm:px-16 sm:py-5 active:scale-[0.97] bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold text-lg rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none"
               >
+                <span className="sweep" aria-hidden="true" />
                 {isSubmitting ? (
-                  <span className="flex items-center">
+                  <span className="relative flex items-center">
                     <svg className="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -391,7 +409,7 @@ const ProjectDiscussion = () => {
                     Sending Email...
                   </span>
                 ) : (
-                  'Send Message'
+                  <span className="relative">Send Message</span>
                 )}
               </button>
             </div>
@@ -403,7 +421,7 @@ const ProjectDiscussion = () => {
 
             {/* Success/Error Message */}
             {submitMessage && (
-              <div className={`text-center p-4 rounded-lg border ${
+              <div role={messageType === 'error' ? 'alert' : 'status'} className={`text-center p-4 rounded-lg border ${
                 messageType === 'success' 
                   ? 'bg-green-50 border-green-200' 
                   : 'bg-red-50 border-red-200'
@@ -416,11 +434,11 @@ const ProjectDiscussion = () => {
               </div>
             )}
           </form>
-        </div>
+        </Glass>
 
         {/* Contact Info Section */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100">
+          <Glass tilt={6} radius={20} className="!bg-white/60 p-8 text-center h-full">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center">
               <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -429,9 +447,9 @@ const ProjectDiscussion = () => {
             <h3 className="font-bold text-gray-800 mb-2 text-lg">Email Us</h3>
             <p className="text-gray-600 text-sm mb-1">lalelaninene@gmail.com</p>
             <p className="text-gray-600 text-sm">thokozanierick02@gmail.com</p>
-          </div>
+          </Glass>
 
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100">
+          <Glass tilt={6} radius={20} className="!bg-white/60 p-8 text-center h-full">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center">
               <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -440,9 +458,9 @@ const ProjectDiscussion = () => {
             <h3 className="font-bold text-gray-800 mb-2 text-lg">Call Us</h3>
             <p className="text-gray-600 text-sm mb-1">+27 64 421 0047</p>
             <p className="text-gray-600 text-sm">+27 69 806 1824</p>
-          </div>
+          </Glass>
 
-          <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100">
+          <Glass tilt={6} radius={20} className="!bg-white/60 p-8 text-center h-full">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center">
               <svg className="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -451,7 +469,7 @@ const ProjectDiscussion = () => {
             </div>
             <h3 className="font-bold text-gray-800 mb-2 text-lg">Remote Work</h3>
             <p className="text-gray-600 text-sm">Serving clients worldwide</p>
-          </div>
+          </Glass>
         </div>
       </div>
     </section>
