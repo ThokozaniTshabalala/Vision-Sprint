@@ -1,7 +1,17 @@
 // Netlify Serverless Function - No server to manage!
 import { Handler } from '@netlify/functions';
 import nodemailer from 'nodemailer';
-import { escapeHtml, headerSafe, validateInquiry, type Inquiry } from '../../server/inquiry';
+
+interface FormData {
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  projectType: string;
+  budget?: string;
+  timeline?: string;
+  message: string;
+}
 
 // Use environment variables for security
 const GMAIL_USER = process.env.GMAIL_USER || 'lalelaninene@gmail.com';
@@ -14,7 +24,18 @@ const COMPANY_LOGO_URL = process.env.COMPANY_LOGO_URL || `${SITE_URL}/vision_spr
 // Prefer a dark/white logo on colored (orange) header backgrounds
 const COMPANY_LOGO_DARK_URL = process.env.COMPANY_LOGO_DARK_URL || COMPANY_LOGO_URL;
 
-const createEmailHTML = (data: Inquiry): string => {
+// Escape HTML entities to prevent HTML/script injection in emails
+const escapeHtml = (str: string | undefined | null): string => {
+  const s = String(str ?? '');
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
+const createEmailHTML = (data: FormData): string => {
   return `
 <!DOCTYPE html>
 <html>
@@ -57,9 +78,7 @@ const createEmailHTML = (data: Inquiry): string => {
 export const handler: Handler = async (event) => {
   // CORS headers
   const headers = {
-    // Only the site itself may call this endpoint from a browser.
-    'Access-Control-Allow-Origin': SITE_URL,
-    Vary: 'Origin',
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
   };
@@ -83,22 +102,16 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    let raw: unknown;
-    try {
-      raw = JSON.parse(event.body || '{}');
-    } catch {
-      return { statusCode: 400, headers, body: JSON.stringify({ success: false, error: 'Invalid request body' }) };
+    const data: FormData = JSON.parse(event.body || '{}');
+    
+    // Validate
+    if (!data.name || !data.email || !data.projectType || !data.message) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ success: false, error: 'Missing required fields' }),
+      };
     }
-
-    const result = validateInquiry(raw);
-    if (result.ok === 'spam') {
-      // Honeypot tripped: pretend success so bots don't learn to adapt.
-      return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'Email sent successfully!' }) };
-    }
-    if (!result.ok) {
-      return { statusCode: 400, headers, body: JSON.stringify({ success: false, error: result.error }) };
-    }
-    const data = result.data;
 
     // Check if email credentials are configured
     if (!GMAIL_APP_PASSWORD) {
@@ -119,7 +132,8 @@ export const handler: Handler = async (event) => {
       },
     });
 
-    const safeName = headerSafe(data.name);
+    // Prepare safe subject (avoid newlines and header injection)
+    const safeName = (data.name || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 200);
 
     // Send email
     await transporter.sendMail({
@@ -138,15 +152,14 @@ export const handler: Handler = async (event) => {
         message: 'Email sent successfully! We\'ll get back to you within 24 hours.',
       }),
     };
-  } catch (error) {
-    // Log details server-side only; SMTP errors can reveal account/config details.
+  } catch (error: any) {
     console.error('Error sending email:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Failed to send email. Please try again or contact us directly.',
+        error: error.message || 'Failed to send email',
       }),
     };
   }
